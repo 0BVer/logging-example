@@ -5,7 +5,7 @@ services:
     build:
       context: extensions/filebeat/
       args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+        ELASTIC_VERSION: 8.5.2
     # Run as 'root' instead of 'filebeat' (uid 1000) to allow reading
     # 'docker.sock' and the host's filesystem.
     user: root
@@ -29,7 +29,5 @@ services:
     environment:
       FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
       BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
-    networks:
-      - elk
     depends_on:
       - elasticsearch

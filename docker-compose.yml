@@ -5,7 +5,7 @@ services:
     build:
       context: elasticsearch/
       args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+        ELASTIC_VERSION: 8.5.2
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
       - elasticsearch:/usr/share/elasticsearch/data:Z
@@ -22,8 +22,6 @@ services:
       # Use single node discovery in order to disable production mode and avoid bootstrap checks.
       # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
-    networks:
-      - elk
     restart: unless-stopped
 
   logstash:
@@ -42,8 +40,6 @@ services:
     environment:
       LS_JAVA_OPTS: -Xms256m -Xmx256m
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
-    networks:
-      - elk
     depends_on:
       - elasticsearch
     restart: unless-stopped
@@ -59,16 +55,9 @@ services:
       - 5601:5601
     environment:
       KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
-    networks:
-      - elk
     depends_on:
       - elasticsearch
     restart: unless-stopped
 
-networks:
-  elk:
-    driver: bridge
-
 volumes:
-  setup:
   elasticsearch:
