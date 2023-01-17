@@ -7,12 +7,7 @@ filebeat.inputs:
 output.logstash:
   enabled: true
   hosts: ["logstash:5044"]
-  # FIXME: Cannot reach the hosts of Logstash
 
-# output.elasticsearch:
-#   hosts: ["http://elasticsearch:9200"]
-#   username: "elastic"
-#   password: "changeme"
 setup.kibana:
   host: "http://kibana:5601"
   username: "elastic"
